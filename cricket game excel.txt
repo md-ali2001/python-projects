@@ -1,0 +1,97 @@
+import random
+from openpyxl import load_workbook
+wb = load_workbook('c:/users/masoo/desktop/scorecard.xlsx')
+sheet=wb.active
+row=0
+column=1
+i=1
+wicket=0
+userscore=int()
+individual=int()
+target=random.randint(51,551)
+match=int(input(print("enter match number")))
+match=match+1
+print("\ntarget",target)
+exceltarget=sheet.cell(row=18,column=match)
+exceltarget.value=target
+playerextract=sheet.cell(row=i,column=1)
+print(playerextract.value)
+while(wicket<10):
+    comp=random.randint(0,6)
+    user=input()
+    if user.isdigit():
+        user=int(user)
+        if user < 7 and user > 0:
+            if comp != user:
+                individual = individual + user
+                userscore = userscore + user
+                print("user=", user, "comp=", comp)
+                print(userscore, "-", wicket)
+                if userscore >= target:
+                    player = sheet.cell(row=wicket + 1, column=match)
+                    player.value = individual
+                    wicket = wicket + 1
+                    notoutr = sheet.cell(row=wicket, column=33)
+                    prev = notoutr.value
+                    notoutr.value = prev + 1
+
+                    break
+
+
+
+                else:
+
+                    pass
+            else:
+                wicket = wicket + 1
+                player = sheet.cell(row=wicket, column=match)
+                player.value = individual
+                print(playerextract.value, " made", individual, "runs\n")
+                individual = 0
+                print(userscore, "-", wicket)
+                i = i + 1
+                playerextract = sheet.cell(row=i, column=1)
+                print(playerextract.value, "\n")
+
+                if userscore >= target:
+                    individual = individual + user
+
+                    player = sheet.cell(row=wicket + 1, column=match)
+                    player.value = individual
+                    notoutr = sheet.cell(row=wicket + 1, column=33)
+                    prev = notoutr.value
+                    notoutr.value = prev + 1
+                    i = i + 1
+                    playerextractnew = sheet.cell(row=i, column=1)
+                    print(playerextractnew.value)
+
+                    break
+                else:
+                    pass
+        else:
+            print("sorry")
+    else:
+        pass
+
+#player=sheet.cell(row=wicket,column=match)
+#player.value=individual
+exceluserscore=sheet.cell(row=19,column=match)
+exceluserscore.value=userscore
+excelwicket=sheet.cell(row=20,column=match)
+if userscore>=target:
+    excelwicket.value=wicket-1
+else:
+    excelwicket.value=wicket
+if wicket<10:
+
+    #player = sheet.cell(row=wicket + 1, column=match)
+    #player.value = individual
+
+    print("you have won")
+else:
+    print("you have lost")
+wb.save('c:/users/masoo/desktop/scorecard.xlsx')
+
+
+
+
